@@ -60,17 +60,17 @@ const routes = [
   {
     type: "collapse",
     name: "Claims",
-    key: "tables",
+    key: "claims",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
+    route: "/claims",
     component: <Tables />,
   },
   {
     type: "collapse",
     name: "Assignments",
-    key: "billing",
+    key: "assignment",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
+    route: "/assignment",
     component: <Billing />,
   },
   // {
