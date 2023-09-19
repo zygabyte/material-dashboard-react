@@ -68,9 +68,9 @@ const routes = [
   {
     type: "collapse",
     name: "Assignments",
-    key: "assignment",
+    key: "assignments",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/assignment",
+    route: "/assignments",
     component: <Billing />,
   },
   // {
