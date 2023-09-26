@@ -140,6 +140,10 @@ const colors = {
       main: "#1a4999",
       state: "#00358E",
     },
+    veriskRed: {
+      main: "#EE3932",
+      state: "#be2e28",
+    },
   },
 
   socialMediaColors: {
