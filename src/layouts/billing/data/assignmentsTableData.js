@@ -21,16 +21,11 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 
-// Images
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
-
 export default function data() {
   const Assignment = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
-      <MDBox ml={2} lineHeight={1}>
+      {/*<MDAvatar src={image} name={name} size="sm" />*/}
+      <MDBox lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
         </MDTypography>
@@ -50,11 +45,13 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "insured", accessor: "insured", width: "30%", align: "left" },
+      { Header: "insured", accessor: "insured", align: "left" },
       { Header: "claim number", accessor: "claim", align: "left" },
       { Header: "assignment status", accessor: "status", align: "center" },
       { Header: "data set", accessor: "data", align: "left" },
       { Header: "estimate", accessor: "estimate", align: "center" },
+      { Header: "assignee", accessor: "assignee", align: "center" },
+      { Header: "job type", accessor: "type", align: "center" },
     ],
 
     rows: [
@@ -76,6 +73,16 @@ export default function data() {
             £3,500
           </MDTypography>
         ),
+        assignee: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Ben Rogers
+          </MDTypography>
+        ),
+        type: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Validation
+          </MDTypography>
+        ),
       },
       {
         insured: <Assignment name="Mr. James White" email="jameswhite@gmail.com" />,
@@ -93,6 +100,16 @@ export default function data() {
         estimate: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             £2,000
+          </MDTypography>
+        ),
+        assignee: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Ben Rogers
+          </MDTypography>
+        ),
+        type: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Validation
           </MDTypography>
         ),
       },
@@ -114,6 +131,16 @@ export default function data() {
             £3,000
           </MDTypography>
         ),
+        assignee: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Ben Rogers
+          </MDTypography>
+        ),
+        type: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Project Management
+          </MDTypography>
+        ),
       },
       {
         insured: <Assignment name="Dr. Jane Mark" email="janemark@gmail.com" />,
@@ -133,23 +160,14 @@ export default function data() {
             £3,500
           </MDTypography>
         ),
-      },
-      {
-        insured: <Assignment name="Mr. Johnny Cash" email="johnnycash@gmail.com" />,
-        claim: <Job title="H01224779SA3431" description="" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="fulfillment" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        data: (
+        assignee: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Callisto - Desk
+            Ben Rogers
           </MDTypography>
         ),
-        estimate: (
+        type: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            £7,400
+            Project Management
           </MDTypography>
         ),
       },
@@ -169,6 +187,45 @@ export default function data() {
         estimate: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             £7,400
+          </MDTypography>
+        ),
+        assignee: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Ben Rogers
+          </MDTypography>
+        ),
+        type: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Repair
+          </MDTypography>
+        ),
+      },
+      {
+        insured: <Assignment name="Mr. Johnny Cash" email="johnnycash@gmail.com" />,
+        claim: <Job title="H01224779SA3431" description="" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="fulfillment" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        data: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Callisto - Desk
+          </MDTypography>
+        ),
+        estimate: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            £7,400
+          </MDTypography>
+        ),
+        assignee: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Ben Rogers
+          </MDTypography>
+        ),
+        type: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Repair
           </MDTypography>
         ),
       },

@@ -31,12 +31,17 @@ import DataTable from "examples/Tables/DataTable";
 
 // Data
 import assignmentTableData from "layouts/billing/data/assignmentsTableData";
+import Icon from "@mui/material/Icon";
+import MDButton from "../../components/MDButton";
 
 function Billing() {
   const { columns, rows } = assignmentTableData();
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <MDButton variant="gradient" color="veriskRed">
+        <Icon sx={{ fontWeight: "bold" }}>add</Icon>&nbsp;new assignment
+      </MDButton>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -58,7 +63,7 @@ function Billing() {
               <MDBox pt={3}>
                 <DataTable
                   table={{ columns, rows }}
-                  isSorted={false}
+                  isSorted={true}
                   entriesPerPage={false}
                   showTotalEntries={false}
                   noEndBorder
