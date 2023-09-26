@@ -21,16 +21,11 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 
-// Images
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
-
 export default function data() {
-  const Author = ({ image, name, email }) => (
+  const Author = ({ name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDAvatar src={image} name={name} size="sm" />
-      <MDBox ml={2} lineHeight={1}>
+      {/*<MDAvatar src={image} name={name} size="sm" />*/}
+      <MDBox lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
         </MDTypography>
@@ -50,16 +45,18 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "insured", accessor: "insured", width: "30%", align: "left" },
-      { Header: "claim number", accessor: "claim", align: "left" },
+      { Header: "insured", accessor: "insured", align: "left" },
+      { Header: "claim number", accessor: "claim", align: "center" },
       { Header: "claim status", accessor: "status", align: "center" },
       { Header: "assignment count", accessor: "count", align: "center" },
       { Header: "estimate", accessor: "estimate", align: "center" },
+      { Header: "peril", accessor: "peril", align: "center" },
+      { Header: "special attention", accessor: "attention", align: "center" },
     ],
 
     rows: [
       {
-        insured: <Author image="" name="Mr. John Michael" email="johnmichael@gmail.com" />,
+        insured: <Author name="Mr. John Michael" email="johnmichael@gmail.com" />,
         claim: <Job title="H02929109LL3901" description="" />,
         status: (
           <MDBox ml={-1}>
@@ -74,6 +71,16 @@ export default function data() {
         estimate: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             £3,500
+          </MDTypography>
+        ),
+        peril: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Escape of water
+          </MDTypography>
+        ),
+        attention: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Lorem Ipsum
           </MDTypography>
         ),
       },
@@ -95,6 +102,16 @@ export default function data() {
             £2,000
           </MDTypography>
         ),
+        peril: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Escape of water
+          </MDTypography>
+        ),
+        attention: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Lorem Ipsum
+          </MDTypography>
+        ),
       },
       {
         insured: <Author name="Mrs. Laura Smith" email="laurasmith@gmail.com" />,
@@ -112,6 +129,16 @@ export default function data() {
         estimate: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             £3,000
+          </MDTypography>
+        ),
+        peril: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Escape of water
+          </MDTypography>
+        ),
+        attention: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Lorem Ipsum
           </MDTypography>
         ),
       },
@@ -133,23 +160,14 @@ export default function data() {
             £3,500
           </MDTypography>
         ),
-      },
-      {
-        insured: <Author name="Mr. Johnny Cash" email="johnnycash@gmail.com" />,
-        claim: <Job title="H01224779SA3431" description="" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="fulfillment" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        count: (
+        peril: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            7
+            Escape of water
           </MDTypography>
         ),
-        estimate: (
+        attention: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            £7,400
+            Lorem Ipsum
           </MDTypography>
         ),
       },
@@ -169,6 +187,45 @@ export default function data() {
         estimate: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             £7,400
+          </MDTypography>
+        ),
+        peril: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Leakage of gas
+          </MDTypography>
+        ),
+        attention: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Lorem Ipsum
+          </MDTypography>
+        ),
+      },
+      {
+        insured: <Author name="Mr. Johnny Cash" email="johnnycash@gmail.com" />,
+        claim: <Job title="H01224779SA3431" description="" />,
+        status: (
+          <MDBox ml={-1}>
+            <MDBadge badgeContent="fulfillment" color="success" variant="gradient" size="sm" />
+          </MDBox>
+        ),
+        count: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            7
+          </MDTypography>
+        ),
+        estimate: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            £7,400
+          </MDTypography>
+        ),
+        peril: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Air pressure
+          </MDTypography>
+        ),
+        attention: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            Lorem Ipsum
           </MDTypography>
         ),
       },

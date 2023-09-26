@@ -30,6 +30,8 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import Icon from "@mui/material/Icon";
+import MDButton from "../../components/MDButton";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
@@ -38,6 +40,10 @@ function Tables() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <MDButton variant="gradient" color="veriskRed">
+        <Icon sx={{ fontWeight: "bold" }}>add</Icon>
+        &nbsp;new claim
+      </MDButton>
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -95,6 +101,13 @@ function Tables() {
           {/*  </Card>*/}
           {/*</Grid>*/}
         </Grid>
+        {/*<MDPagination*/}
+        {/*  item*/}
+        {/*  key={option}*/}
+        {/*  onClick={() => gotoPage(Number(option))}*/}
+        {/*>*/}
+        {/*  1*/}
+        {/*</MDPagination>*/}
       </MDBox>
       <Footer />
     </DashboardLayout>
