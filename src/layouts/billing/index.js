@@ -17,20 +17,20 @@ Coded by www.creative-tim.com
 import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import MDBox from "../../components/MDBox";
+import MDTypography from "../../components/MDTypography";
 
 // Material Dashboard 2 React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import Footer from "../../examples/Footer";
 
 // Billing page components
 import Card from "@mui/material/Card";
-import DataTable from "examples/Tables/DataTable";
+import DataTable from "../../examples/Tables/DataTable";
 
 // Data
-import assignmentTableData from "layouts/billing/data/assignmentsTableData";
+import assignmentTableData from "../../layouts/billing/data/assignmentsTableData";
 import Icon from "@mui/material/Icon";
 import MDButton from "../../components/MDButton";
 

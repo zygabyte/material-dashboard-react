@@ -18,24 +18,36 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import MDBox from "../../components/MDBox";
+import MDTypography from "../../components/MDTypography";
 
 // Material Dashboard 2 React example components
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
+import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import Footer from "../../examples/Footer";
+import DataTable from "../../examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import claimsTableData from "../../layouts/tables/data/authorsTableData";
 import Icon from "@mui/material/Icon";
 import MDButton from "../../components/MDButton";
+import { useAppDispatch, useAppStateSelector } from "../../core/store/hooks";
+import { claimGetClaims } from "../../core/actions/claims-actions";
+import { useEffect } from "react";
 
 function Tables() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const claimsState = useAppStateSelector((state) => state.claimsState);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    let request = {
+      pageNumber: 1,
+      pageSize: 20,
+      paginate: true,
+    };
+    dispatch(claimGetClaims(request));
+  }, [claimsState.pageNumber]);
+  
+  const { columns, rows } = claimsTableData(claimsState.claims);
 
   return (
     <DashboardLayout>
