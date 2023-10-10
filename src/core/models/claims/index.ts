@@ -11,6 +11,7 @@ export interface ClaimModel {
     claimType: number;
     claimStatus: number;
     estimate: number;
+    assignments: number;
     
     policy: PolicyModel;
     policyholder: PolicyholderModel;

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {ClaimModel} from "../models/claims";
 import {claimGetClaims} from "../actions/claims-actions";
 
-interface StateTypes {
+export interface StateTypes {
     loadingClaims: boolean;
     claims: ClaimModel[];
     selectedClaim?: ClaimModel;
@@ -31,7 +31,8 @@ export const claimsSlice = createSlice({
             state.loadingClaims = true;
         });
         builder.addCase(claimGetClaims.fulfilled, (state, { payload }) => {
-            (state.claims as any[]) = payload.claims;
+            // (state.claims as any[]) = payload.claims;
+            state.claims.push(payload.claims);
             state.totalClaims = payload.total;
             state.loadingClaims = false;
         });
@@ -43,3 +44,5 @@ export const claimsSlice = createSlice({
 
 export const { handleSelectedClaim } =
     claimsSlice.actions;
+
+export default claimsSlice.reducer;

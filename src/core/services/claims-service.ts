@@ -7,9 +7,7 @@ export const getClaims = async (
 ) => {
     let requestUrl = `${EndPoints.claims}?pageNumber=${request.pageNumber}&pageSize=${request.pageSize}&paginate=${request.paginate}`;
     
-    const response = await apiClient.get(
-        requestUrl
-    );
-    console.log('response ', response);
+    const response = await apiClient.get(requestUrl);
+    console.log('claims response ', response);
     return { claims: response.data.data, total: response.data.total };
 };
