@@ -28,27 +28,91 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 
 // Data
-import claimsTableData from "../../layouts/tables/data/authorsTableData";
+import claimsTableData from "../../layouts/tables/data/claimsTableData";
 import Icon from "@mui/material/Icon";
 import MDButton from "../../components/MDButton";
-import { useAppDispatch, useAppStateSelector } from "../../core/store/hooks";
+import { useAppDispatch } from "../../core/store/hooks";
 import { claimGetClaims } from "../../core/actions/claims-actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_ACTION,
+  DEFAULT_PAGE_SIZE,
+  IDLE,
+  SUCCEEDED
+} from "../../core/models/constants/index";
+import { useSelector } from "react-redux";
+import { getClaims, getPageStatus } from "../../core/reducers/claims-reducer";
 
-function Tables() {
-  const claimsState = useAppStateSelector((state) => state.claimsState);
+function Claims() {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    let request = {
-      pageNumber: 1,
-      pageSize: 20,
-      paginate: true,
-    };
-    dispatch(claimGetClaims(request));
-  }, [claimsState.pageNumber]);
-  
-  const { columns, rows } = claimsTableData(claimsState.claims);
 
+  const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
+  const [pageAction, setPageAction] = useState(DEFAULT_PAGE_ACTION);
+  
+  const claims = useSelector(getClaims);
+  const pageStatus = useSelector(getPageStatus); 
+  
+  useEffect(() => {
+    if (pageStatus === IDLE){
+      let request = {
+        pageNumber: pageNumber,
+        pageSize: pageSize,
+        paginate: pageAction,
+      };
+      
+      dispatch(claimGetClaims(request));
+    }
+  }, [pageNumber, pageSize, pageAction, dispatch]);
+  
+  if (pageStatus === SUCCEEDED){
+    const {columns, rows} = claimsTableData(claims);
+
+    return (
+      <DashboardLayout>
+        <DashboardNavbar />
+        <MDButton variant="gradient" color="veriskRed">
+          <Icon sx={{ fontWeight: "bold" }}>add</Icon>
+          &nbsp;new claim
+        </MDButton>
+        <MDBox pt={6} pb={3}>
+          <Grid container spacing={6}>
+            <Grid item xs={12}>
+              <Card>
+                <MDBox
+                  mx={2}
+                  mt={-3}
+                  py={3}
+                  px={2}
+                  variant="gradient"
+                  bgColor="info"
+                  borderRadius="lg"
+                  coloredShadow="info"
+                >
+                  <MDTypography variant="h6" color="white">
+                    Claims
+                  </MDTypography>
+                </MDBox>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns, rows }}
+                    isSorted={true}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
+          </Grid>
+        </MDBox>
+        <Footer />
+      </DashboardLayout>
+    );
+  }
+
+  // look into a loading component...
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -75,13 +139,13 @@ function Tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={true}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
+                {/*<DataTable*/}
+                {/*  table={{ columns, rows }}*/}
+                {/*  isSorted={true}*/}
+                {/*  entriesPerPage={false}*/}
+                {/*  showTotalEntries={false}*/}
+                {/*  noEndBorder*/}
+                {/*/>*/}
               </MDBox>
             </Card>
           </Grid>
@@ -124,6 +188,7 @@ function Tables() {
       <Footer />
     </DashboardLayout>
   );
+  
 }
 
-export default Tables;
+export default Claims;
