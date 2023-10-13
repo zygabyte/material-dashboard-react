@@ -18,11 +18,12 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 React components
 import MDBox from "../../../components/MDBox";
 import MDTypography from "../../../components/MDTypography";
-// import MDAvatar from "components/MDAvatar";
 import MDBadge from "../../../components/MDBadge";
+import { AssignmentStatuses, JobTypes } from "../../../core/models/assignments/constants/index";
+import { ClaimDetails } from "../../tables/data/claimsTableData";
 
-export default function data() {
-  const Assignment = ({ image, name, email }) => (
+export default function data(assignments) {
+  const Assignment = ({ name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       {/*<MDAvatar src={image} name={name} size="sm" />*/}
       <MDBox lineHeight={1}>
@@ -33,18 +34,51 @@ export default function data() {
       </MDBox>
     </MDBox>
   );
-
-  const Job = ({ title, description }) => (
-    <MDBox lineHeight={1} textAlign="left">
-      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {title}
-      </MDTypography>
-      <MDTypography variant="caption">{description}</MDTypography>
-    </MDBox>
-  );
+  
+  const assignmentsRows = [];
+  let i = 1;
+  
+  assignments.forEach(assignment => {
+    assignmentsRows.push({
+      serial: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {i++}
+        </MDTypography>
+      ),
+      insured: <Assignment name={assignment.customerName} email={assignment.customerEmail} />,
+      claim: <ClaimDetails title={assignment.claimNumber} description="" />,
+      status: (
+        <MDBox ml={-1}>
+          <MDBadge badgeContent={AssignmentStatuses[assignment.assignmentStatus].name} 
+                   color="blue" variant="gradient" size="sm" />
+        </MDBox>
+      ),
+      data: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {assignment.dataSet}
+        </MDTypography>
+      ),
+      estimate: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          £{assignment.estimate}
+        </MDTypography>
+      ),
+      assignee: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {assignment.assignee}
+        </MDTypography>
+      ),
+      type: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {JobTypes[assignment.jobType].name}
+        </MDTypography>
+      ),
+    })
+  });
 
   return {
     columns: [
+      { Header: "s/n", accessor: "serial", align: "left" },
       { Header: "insured", accessor: "insured", align: "left" },
       { Header: "claim number", accessor: "claim", align: "left" },
       { Header: "assignment status", accessor: "status", align: "center" },
@@ -53,182 +87,6 @@ export default function data() {
       { Header: "assignee", accessor: "assignee", align: "center" },
       { Header: "job type", accessor: "type", align: "center" },
     ],
-
-    rows: [
-      {
-        insured: <Assignment image="" name="Mr. John Michael" email="johnmichael@gmail.com" />,
-        claim: <Job title="H02929109LL3901" description="" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="inspection" color="blue" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        data: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Callisto - Desk
-          </MDTypography>
-        ),
-        estimate: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            £3,500
-          </MDTypography>
-        ),
-        assignee: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Ben Rogers
-          </MDTypography>
-        ),
-        type: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Validation
-          </MDTypography>
-        ),
-      },
-      {
-        insured: <Assignment name="Mr. James White" email="jameswhite@gmail.com" />,
-        claim: <Job title="H02134709LL3901" description="" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="canceled" color="dark" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        data: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Callisto - Loss Adjuster
-          </MDTypography>
-        ),
-        estimate: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            £2,000
-          </MDTypography>
-        ),
-        assignee: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Ben Rogers
-          </MDTypography>
-        ),
-        type: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Validation
-          </MDTypography>
-        ),
-      },
-      {
-        insured: <Assignment name="Mrs. Laura Smith" email="laurasmith@gmail.com" />,
-        claim: <Job title="H01224709LL3901" description="" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="fulfillment" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        data: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Callisto - Desk
-          </MDTypography>
-        ),
-        estimate: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            £3,000
-          </MDTypography>
-        ),
-        assignee: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Ben Rogers
-          </MDTypography>
-        ),
-        type: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Project Management
-          </MDTypography>
-        ),
-      },
-      {
-        insured: <Assignment name="Dr. Jane Mark" email="janemark@gmail.com" />,
-        claim: <Job title="H01224709SL3322" description="" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="fulfillment" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        data: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Callisto - Repair Contractor
-          </MDTypography>
-        ),
-        estimate: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            £3,500
-          </MDTypography>
-        ),
-        assignee: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Ben Rogers
-          </MDTypography>
-        ),
-        type: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Project Management
-          </MDTypography>
-        ),
-      },
-      {
-        insured: <Assignment name="Mr. Johnny Cash" email="johnnycash@gmail.com" />,
-        claim: <Job title="H01224779SA3431" description="" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="fulfillment" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        data: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Callisto - Desk
-          </MDTypography>
-        ),
-        estimate: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            £7,400
-          </MDTypography>
-        ),
-        assignee: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Ben Rogers
-          </MDTypography>
-        ),
-        type: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Repair
-          </MDTypography>
-        ),
-      },
-      {
-        insured: <Assignment name="Mr. Johnny Cash" email="johnnycash@gmail.com" />,
-        claim: <Job title="H01224779SA3431" description="" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="fulfillment" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        data: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Callisto - Desk
-          </MDTypography>
-        ),
-        estimate: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            £7,400
-          </MDTypography>
-        ),
-        assignee: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Ben Rogers
-          </MDTypography>
-        ),
-        type: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Repair
-          </MDTypography>
-        ),
-      },
-    ],
+    rows: assignmentsRows,
   };
 }
