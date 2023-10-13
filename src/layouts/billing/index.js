@@ -17,73 +17,143 @@ Coded by www.creative-tim.com
 import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
+import MDBox from "../../components/MDBox";
+import MDTypography from "../../components/MDTypography";
 
 // Material Dashboard 2 React examples
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import MasterCard from "examples/Cards/MasterCard";
-import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
+import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import Footer from "../../examples/Footer";
 
 // Billing page components
-import PaymentMethod from "layouts/billing/components/PaymentMethod";
-import Invoices from "layouts/billing/components/Invoices";
-import BillingInformation from "layouts/billing/components/BillingInformation";
-import Transactions from "layouts/billing/components/Transactions";
+import Card from "@mui/material/Card";
+import DataTable from "../../examples/Tables/DataTable";
 
-function Billing() {
+// Data
+import assignmentTableData from "../../layouts/billing/data/assignmentsTableData";
+import Icon from "@mui/material/Icon";
+import MDButton from "../../components/MDButton";
+import { useAppDispatch } from "../../core/store/hooks";
+import { useEffect, useState } from "react";
+import { assignmentGetAssignments } from "../../core/actions/assignments-actions";
+import {
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_ACTION,
+  DEFAULT_PAGE_SIZE,
+  IDLE,
+  SUCCEEDED
+} from "../../core/models/constants/index";
+import { useSelector } from "react-redux";
+import { getAssignments, getPageStatus } from "../../core/reducers/assignments-reducer";
+
+function Assignments() {
+  const dispatch = useAppDispatch();
+
+  const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
+  const [pageAction, setPageAction] = useState(DEFAULT_PAGE_ACTION);
+
+  const assignments = useSelector(getAssignments);
+  const pageStatus = useSelector(getPageStatus);
+
+  useEffect(() => {
+    if (pageStatus === IDLE){
+      let request = {
+        pageNumber: pageNumber,
+        pageSize: pageSize,
+        paginate: pageAction,
+      };
+
+      dispatch(assignmentGetAssignments(request));
+    }
+  }, [pageNumber, pageSize, pageAction, dispatch]);
+
+  if (pageStatus === SUCCEEDED) {
+    const { columns, rows } = assignmentTableData(assignments);
+
+    return (
+      <DashboardLayout>
+        <DashboardNavbar />
+        <MDButton variant="gradient" color="veriskRed">
+          <Icon sx={{ fontWeight: "bold" }}>add</Icon>&nbsp;new assignment
+        </MDButton>
+        <MDBox pt={6} pb={3}>
+          <Grid container spacing={6}>
+            <Grid item xs={12}>
+              <Card>
+                <MDBox
+                  mx={2}
+                  mt={-3}
+                  py={3}
+                  px={2}
+                  variant="gradient"
+                  bgColor="info"
+                  borderRadius="lg"
+                  coloredShadow="info"
+                >
+                  <MDTypography variant="h6" color="white">
+                    Assignments
+                  </MDTypography>
+                </MDBox>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns, rows }}
+                    isSorted={true}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
+          </Grid>
+        </MDBox>
+        <Footer />
+      </DashboardLayout>
+    );
+  }
+
+  // look into a loading component...
   return (
     <DashboardLayout>
-      <DashboardNavbar absolute isMini />
-      <MDBox mt={8}>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={8}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} xl={6}>
-                  <MasterCard number={4562112245947852} holder="jack peterson" expires="11/22" />
-                </Grid>
-                <Grid item xs={12} md={6} xl={3}>
-                  <DefaultInfoCard
-                    icon="account_balance"
-                    title="salary"
-                    description="Belong Interactive"
-                    value="+$2000"
-                  />
-                </Grid>
-                <Grid item xs={12} md={6} xl={3}>
-                  <DefaultInfoCard
-                    icon="paypal"
-                    title="paypal"
-                    description="Freelance Payment"
-                    value="$455.00"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <PaymentMethod />
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <Invoices />
-            </Grid>
+      <DashboardNavbar />
+      <MDButton variant="gradient" color="veriskRed">
+        <Icon sx={{ fontWeight: "bold" }}>add</Icon>&nbsp;new assignment
+      </MDButton>
+      <MDBox pt={6} pb={3}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <Card>
+              <MDBox
+                mx={2}
+                mt={-3}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Assignments
+                </MDTypography>
+              </MDBox>
+              <MDBox pt={3}>
+                {/*<DataTable*/}
+                {/*  table={{ columns, rows }}*/}
+                {/*  isSorted={true}*/}
+                {/*  entriesPerPage={false}*/}
+                {/*  showTotalEntries={false}*/}
+                {/*  noEndBorder*/}
+                {/*/>*/}
+              </MDBox>
+            </Card>
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={7}>
-              <BillingInformation />
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <Transactions />
-            </Grid>
-          </Grid>
-        </MDBox>
+        </Grid>
       </MDBox>
       <Footer />
     </DashboardLayout>
   );
 }
 
-export default Billing;
+export default Assignments;
