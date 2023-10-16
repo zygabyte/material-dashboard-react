@@ -37,8 +37,8 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "./layouts/dashboard";
-import Claims from "./layouts/tables";
-import Assignments from "./layouts/billing";
+import Claims from "./layouts/claims";
+import Assignments from "./layouts/assignments";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
