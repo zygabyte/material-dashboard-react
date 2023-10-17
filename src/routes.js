@@ -39,9 +39,11 @@ Coded by www.creative-tim.com
 import Dashboard from "./layouts/dashboard";
 import Claims from "./layouts/claims";
 import Assignments from "./layouts/assignments";
+import CreateClaim from "./layouts/claims/create-claim";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import { Route } from "react-router-dom";
 
 const routes = [
   {
@@ -71,3 +73,34 @@ const routes = [
 ];
 
 export default routes;
+
+const getCreateClaimRoute = () => {
+  return {
+    type: "collapse",
+    name: "Create Claim",
+    key: "create claim",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/claims/create",
+    component: <CreateClaim />,
+  }
+};
+
+export const getRoutes = (allRoutes) =>{
+  let appRoutes = allRoutes.map((route) => {
+    if (route.collapse) {
+      return getRoutes(route.collapse);
+    }
+
+    if (route.route) {
+      return <Route exact path={route.route} element={route.component} key={route.key} />;
+    }
+
+    return null;
+  });
+  
+  const createClaim = getCreateClaimRoute();
+  appRoutes.push( <Route exact path={createClaim.route} element={createClaim.component} key={createClaim.key} />);
+  
+  return appRoutes;
+}
+  
