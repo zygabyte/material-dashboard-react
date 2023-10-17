@@ -40,6 +40,7 @@ import Dashboard from "./layouts/dashboard";
 import Claims from "./layouts/claims";
 import Assignments from "./layouts/assignments";
 import CreateClaim from "./layouts/claims/create-claim";
+import CreateAssignment from "./layouts/assignments/create-assignment";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -76,12 +77,16 @@ export default routes;
 
 const getCreateClaimRoute = () => {
   return {
-    type: "collapse",
-    name: "Create Claim",
-    key: "create claim",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
+    key: "create-claim",
     route: "/claims/create",
     component: <CreateClaim />,
+  }
+};
+const getCreateAssignmentRoute = () => {
+  return {
+    key: "create-assignment",
+    route: "/assignments/create",
+    component: <CreateAssignment />,
   }
 };
 
@@ -98,8 +103,11 @@ export const getRoutes = (allRoutes) =>{
     return null;
   });
   
-  const createClaim = getCreateClaimRoute();
-  appRoutes.push( <Route exact path={createClaim.route} element={createClaim.component} key={createClaim.key} />);
+  const createClaimRoute = getCreateClaimRoute();
+  const createAssignmentRoute = getCreateAssignmentRoute();
+  
+  appRoutes.push( <Route exact path={createClaimRoute.route} element={createClaimRoute.component} key={createClaimRoute.key} />);
+  appRoutes.push( <Route exact path={createAssignmentRoute.route} element={createAssignmentRoute.component} key={createAssignmentRoute.key} />);
   
   return appRoutes;
 }
