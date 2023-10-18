@@ -28,7 +28,7 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 
 // Data
-import claimsTableData from "../../layouts/tables/data/claimsTableData";
+import claimsTableData from "../../layouts/claims/data/claimsTableData";
 import Icon from "@mui/material/Icon";
 import MDButton from "../../components/MDButton";
 import { useAppDispatch } from "../../core/store/hooks";
@@ -43,9 +43,11 @@ import {
 } from "../../core/models/constants/index";
 import { useSelector } from "react-redux";
 import { getClaims, getPageStatus } from "../../core/reducers/claims-reducer";
+import { useNavigate } from "react-router-dom";
 
 function Claims() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
@@ -72,7 +74,7 @@ function Claims() {
     return (
       <DashboardLayout>
         <DashboardNavbar />
-        <MDButton variant="gradient" color="veriskRed">
+        <MDButton variant="gradient" color="veriskRed" onClick={() => navigate('/claims/create')}>
           <Icon sx={{ fontWeight: "bold" }}>add</Icon>
           &nbsp;new claim
         </MDButton>
@@ -116,7 +118,7 @@ function Claims() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDButton variant="gradient" color="veriskRed">
+      <MDButton variant="gradient" color="veriskRed" onClick={() => navigate('/claims/create')}>
         <Icon sx={{ fontWeight: "bold" }}>add</Icon>
         &nbsp;new claim
       </MDButton>

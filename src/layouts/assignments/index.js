@@ -30,7 +30,7 @@ import Card from "@mui/material/Card";
 import DataTable from "../../examples/Tables/DataTable";
 
 // Data
-import assignmentTableData from "../../layouts/billing/data/assignmentsTableData";
+import assignmentTableData from "../../layouts/assignments/data/assignmentsTableData";
 import Icon from "@mui/material/Icon";
 import MDButton from "../../components/MDButton";
 import { useAppDispatch } from "../../core/store/hooks";
@@ -45,9 +45,11 @@ import {
 } from "../../core/models/constants/index";
 import { useSelector } from "react-redux";
 import { getAssignments, getPageStatus } from "../../core/reducers/assignments-reducer";
+import { useNavigate } from "react-router-dom";
 
 function Assignments() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
@@ -74,7 +76,7 @@ function Assignments() {
     return (
       <DashboardLayout>
         <DashboardNavbar />
-        <MDButton variant="gradient" color="veriskRed">
+        <MDButton variant="gradient" color="veriskRed" onClick={() => navigate('/assignments/create')}>
           <Icon sx={{ fontWeight: "bold" }}>add</Icon>&nbsp;new assignment
         </MDButton>
         <MDBox pt={6} pb={3}>
@@ -117,7 +119,7 @@ function Assignments() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDButton variant="gradient" color="veriskRed">
+      <MDButton variant="gradient" color="veriskRed" onClick={() => navigate('/assignments/create')}>
         <Icon sx={{ fontWeight: "bold" }}>add</Icon>&nbsp;new assignment
       </MDButton>
       <MDBox pt={6} pb={3}>

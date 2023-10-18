@@ -20,7 +20,7 @@ import MDBox from "../../../components/MDBox";
 import MDTypography from "../../../components/MDTypography";
 import MDBadge from "../../../components/MDBadge";
 import { AssignmentStatuses, JobTypes } from "../../../core/models/assignments/constants/index";
-import { ClaimDetails } from "../../tables/data/claimsTableData";
+import { ClaimDetails } from "../../claims/data/claimsTableData";
 
 export default function data(assignments) {
   const Assignment = ({ name, email }) => (

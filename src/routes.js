@@ -37,11 +37,14 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "./layouts/dashboard";
-import Claims from "./layouts/tables";
-import Assignments from "./layouts/billing";
+import Claims from "./layouts/claims";
+import Assignments from "./layouts/assignments";
+import CreateClaim from "./layouts/claims/create-claim";
+import CreateAssignment from "./layouts/assignments/create-assignment";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import { Route } from "react-router-dom";
 
 const routes = [
   {
@@ -71,3 +74,41 @@ const routes = [
 ];
 
 export default routes;
+
+const getCreateClaimRoute = () => {
+  return {
+    key: "create-claim",
+    route: "/claims/create",
+    component: <CreateClaim />,
+  }
+};
+const getCreateAssignmentRoute = () => {
+  return {
+    key: "create-assignment",
+    route: "/assignments/create",
+    component: <CreateAssignment />,
+  }
+};
+
+export const getRoutes = (allRoutes) =>{
+  let appRoutes = allRoutes.map((route) => {
+    if (route.collapse) {
+      return getRoutes(route.collapse);
+    }
+
+    if (route.route) {
+      return <Route exact path={route.route} element={route.component} key={route.key} />;
+    }
+
+    return null;
+  });
+  
+  const createClaimRoute = getCreateClaimRoute();
+  const createAssignmentRoute = getCreateAssignmentRoute();
+  
+  appRoutes.push( <Route exact path={createClaimRoute.route} element={createClaimRoute.component} key={createClaimRoute.key} />);
+  appRoutes.push( <Route exact path={createAssignmentRoute.route} element={createAssignmentRoute.component} key={createAssignmentRoute.key} />);
+  
+  return appRoutes;
+}
+  
