@@ -101,7 +101,7 @@ function Claims() {
                     table={{ columns, rows }}
                     isSorted={true}
                     entriesPerPage={false}
-                    showTotalEntries={false}
+                    showTotalEntries={true}
                     noEndBorder
                   />
                 </MDBox>
