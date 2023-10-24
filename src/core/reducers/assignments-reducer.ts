@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {AssignmentModel} from "../models/assignments";
-import {assignmentGetAssignments} from "../actions/assignments-actions";
+import { assignmentCreateAssignment, assignmentGetAssignments } from "../actions/assignments-actions";
 import { DEFAULT_PAGE, FAILED, IDLE, LOADING, SUCCEEDED } from "../models/constants/index";
 import { IRootState } from "./index";
 
 export interface StateTypes {
-  status: 'IDLE' | 'LOADING' | 'SUCCEEDED' | 'FAILED';
+  loadingAssignments: 'IDLE' | 'LOADING' | 'SUCCEEDED' | 'FAILED';
+  loadingCreateAssignment: 'IDLE' | 'LOADING' | 'SUCCEEDED' | 'FAILED';
   assignments: AssignmentModel[];
   selectedAssignment?: AssignmentModel;
   pageNumber: number;
@@ -13,7 +14,8 @@ export interface StateTypes {
 }
 
 const initialState: StateTypes = {
-  status: IDLE,
+  loadingAssignments: IDLE,
+  loadingCreateAssignment: IDLE,
   assignments: [],
   selectedAssignment: undefined,
   pageNumber: DEFAULT_PAGE,
@@ -30,15 +32,26 @@ export const assignmentsSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(assignmentGetAssignments.pending, (state) => {
-      state.status = LOADING;
+      state.loadingAssignments = LOADING;
     });
     builder.addCase(assignmentGetAssignments.fulfilled, (state, { payload }) => {
-      state.assignments = payload.assignments;
+      state.assignments = payload.data;
       state.totalAssignments = payload.total;
-      state.status = SUCCEEDED;
+      state.loadingAssignments = SUCCEEDED;
     });
     builder.addCase(assignmentGetAssignments.rejected, (state) => {
-      state.status = FAILED;
+      state.loadingAssignments = FAILED;
+    });
+
+    builder.addCase(assignmentCreateAssignment.pending, (state) => {
+      state.loadingCreateAssignment = LOADING;
+    });
+    builder.addCase(assignmentCreateAssignment.fulfilled, (state, { payload }) => {
+      state.assignments = [payload.data, ...state.assignments]
+      state.loadingCreateAssignment = SUCCEEDED;
+    });
+    builder.addCase(assignmentCreateAssignment.rejected, (state) => {
+      state.loadingCreateAssignment = FAILED;
     });
   },
 });
@@ -53,4 +66,4 @@ export const getAssignments = (state: IRootState) => state.assignmentState.assig
 export const getAssignment = (state: IRootState, assignmentId: string) =>
   state.assignmentState.assignments.find(assignment => assignment.assignmentId == assignmentId);
 
-export const getPageStatus = (state: IRootState) => state.assignmentState.status;
+export const getPageStatus = (state: IRootState) => state.assignmentState.loadingAssignments;

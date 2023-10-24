@@ -7,8 +7,60 @@ import MDTypography from "../../components/MDTypography";
 import MDInput from "../../components/MDInput";
 import MDButton from "../../components/MDButton";
 import Footer from "../../examples/Footer";
+import { useAppDispatch } from "../../core/store/hooks";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { assignmentCreateAssignment } from "../../core/actions/assignments-actions";
 
 function CreateAssignment() {
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  
+  const schema = yup.object().shape({
+    jobType: yup.number().required("Please provide job type"),
+    estimate: yup.number().required("Please provide estimate"),
+    dataSet: yup.string().required("Please provide data set"),
+    assignee: yup.string().required("Please provide assignee"),
+    notes: yup.string().required("Please provide note"),
+  });
+
+
+  const {
+    register,
+    // formState: { errors },
+    handleSubmit,
+    setError,
+    // reset,
+    // setValue,
+    // watch,
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {},
+  });
+
+  const onSubmit = async (assignment) => {
+    try {
+      assignment.claimId = 'dbed5a92-2f80-4796-8e14-87243a1d1680';
+      
+      console.log('assignment to be created ', assignment);
+      const response = await dispatch(assignmentCreateAssignment(assignment)).unwrap();
+
+      console.log('response from create assignment...', response);
+      navigate('/assignments');
+    } catch (e){
+      console.log('error from catch exception ', e);
+      setError('serverError', {
+        type: 'serverSideError',
+        message: 'something is wrong '
+      })
+    }
+  };
+
+  const onError = (errors, e) => console.log(errors, e);
+  
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -36,8 +88,8 @@ function CreateAssignment() {
               </MDBox>
               <MDBox pt={4} pb={3} px={3}>
 
-                {/*Instruction Type*/}
-                <MDBox component="form" role="form">
+                <MDBox component="form" role="form" onSubmit={handleSubmit(onSubmit, onError)}>
+                  {/*Instruction Type*/}
                   <MDTypography variant="h5" fontWeight="medium" mt={1} mb={3}>
                     Instruction Type
                   </MDTypography>
@@ -45,30 +97,35 @@ function CreateAssignment() {
                     <MDInput type="text" label="What type of instruction would you like to create" variant="standard" size="small" fullWidth />
                   </MDBox>
                   <MDBox mb={2}>
-                    <MDInput type="text" label="Please select a job type for this instruction" variant="standard" size="small" fullWidth />
+                    <MDInput type="text" label="Please select a job type for this instruction" {...register("jobType")} variant="standard" size="small" fullWidth />
                   </MDBox>
                   <MDBox mb={2}>
-                    <MDInput type="text" label="Please choose an assignee" variant="standard" size="small" fullWidth />
+                    <MDInput type="number" label="Please enter assignment estimate" {...register("estimate")} variant="standard" size="small" fullWidth />
                   </MDBox>
-                </MDBox>
-
-
-                {/*Instructions*/}
-                <MDBox component="form" role="form" mt={5}>
+                  <MDBox mb={2}>
+                    <MDInput type="text" label="Please enter assignment dataset" {...register("dataSet")} variant="standard" size="small" fullWidth />
+                  </MDBox>
+                  <MDBox mb={2}>
+                    <MDInput type="text" label="Please choose an assignee" {...register("assignee")} variant="standard" size="small" fullWidth />
+                  </MDBox>
+                  
+                  
+                  {/*Instructions*/}
                   <MDTypography variant="h5" fontWeight="medium" mt={1} mb={3}>
                     Instructions
                   </MDTypography>
 
                   <MDBox mb={3}>
-                    <MDInput label="Please provide instructions for the assignee" multiline rows={7} fullWidth />
+                    <MDInput text="text" label="Please provide instructions for the assignee" {...register("notes")} multiline rows={7} fullWidth />
                   </MDBox>
 
                   <MDBox mt={4} mb={1}>
-                    <MDButton variant="gradient" color="info" fullWidth>
+                    <MDButton variant="gradient" color="info" fullWidth type="submit">
                       create assignment
                     </MDButton>
                   </MDBox>
                 </MDBox>
+              
               </MDBox>
             </Card>
           </Grid>

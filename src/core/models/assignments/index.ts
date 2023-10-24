@@ -1,6 +1,7 @@
 export interface AssignmentModel {
   assignmentId: string;
   claimId: string;
+  transactionId: string;
   claimNumber: string;
   customerName: string;
   customerEmail: string;
