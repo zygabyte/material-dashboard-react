@@ -4,14 +4,14 @@ import { createAssignmentAsync, getAssignmentsAsync } from "../services/assignme
 import { AssignmentModel } from "../models/assignments/index";
 import { ListResponse, ObjectResponse } from "../models/common/responses";
 
-export const assignmentGetAssignments : AsyncThunk<ListResponse<AssignmentModel>, any, any> = createAsyncThunk(
+export const assignmentGetAssignments = createAsyncThunk(
   "assignment/getAssignments",
   async (request: FilterAssignmentRequest) : Promise<ListResponse<AssignmentModel>> => {
     return await getAssignmentsAsync(request);
   }
 );
 
-export const assignmentCreateAssignment : AsyncThunk<ObjectResponse<AssignmentModel>, any, any>  = createAsyncThunk(
+export const assignmentCreateAssignment = createAsyncThunk(
   "assignment/createAssignment",
   async (request: AssignmentModel) : Promise<ObjectResponse<AssignmentModel>> => {
     return await createAssignmentAsync(request);

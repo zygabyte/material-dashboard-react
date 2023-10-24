@@ -24,7 +24,7 @@ function CreateAssignment() {
     estimate: yup.number().required("Please provide estimate"),
     dataSet: yup.string().required("Please provide data set"),
     assignee: yup.string().required("Please provide assignee"),
-    notes: yup.string().required("Please provide note"),
+    notes: yup.string().required("Please provide notes"),
   });
 
 
@@ -43,7 +43,7 @@ function CreateAssignment() {
 
   const onSubmit = async (assignment) => {
     try {
-      assignment.claimId = 'dbed5a92-2f80-4796-8e14-87243a1d1680';
+      assignment.claimId = '3788b992-0627-4145-9dfb-913a8c60105b';
       
       console.log('assignment to be created ', assignment);
       const response = await dispatch(assignmentCreateAssignment(assignment)).unwrap();

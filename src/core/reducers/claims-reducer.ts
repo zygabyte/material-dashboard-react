@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {ClaimModel} from "../models/claims";
-import {claimGetClaims} from "../actions/claims-actions";
+import { claimCreateClaim, claimGetClaims } from "../actions/claims-actions";
 import { DEFAULT_PAGE, FAILED, IDLE, LOADING, SUCCEEDED } from "../models/constants/index";
 import { IRootState } from "./index";
 
 export interface StateTypes {
-    status: 'IDLE' | 'LOADING' | 'SUCCEEDED' | 'FAILED';
+    loadingClaims: 'IDLE' | 'LOADING' | 'SUCCEEDED' | 'FAILED';
+    loadingCreateClaim: 'IDLE' | 'LOADING' | 'SUCCEEDED' | 'FAILED';
     claims: ClaimModel[];
     selectedClaim?: ClaimModel;
     pageNumber: number;
@@ -14,7 +15,8 @@ export interface StateTypes {
 
 
 const initialState: StateTypes = {
-    status: IDLE,
+    loadingClaims: IDLE,
+    loadingCreateClaim: IDLE,
     claims: [],
     selectedClaim: undefined,
     pageNumber: DEFAULT_PAGE,
@@ -31,15 +33,26 @@ export const claimsSlice = createSlice({
     },
     extraReducers(builder) {
         builder.addCase(claimGetClaims.pending, (state) => {
-            state.status = LOADING;
+            state.loadingClaims = LOADING;
         });
         builder.addCase(claimGetClaims.fulfilled, (state, { payload }) => {
-            state.claims = payload.claims;
+            state.claims = payload.data;
             state.totalClaims = payload.total;
-            state.status = SUCCEEDED;
+            state.loadingClaims = SUCCEEDED;
         });
         builder.addCase(claimGetClaims.rejected, (state) => {
-            state.status = FAILED;
+            state.loadingClaims = FAILED;
+        });
+
+        builder.addCase(claimCreateClaim.pending, (state) => {
+            state.loadingCreateClaim = LOADING;
+        });
+        builder.addCase(claimCreateClaim.fulfilled, (state, { payload }) => {
+            state.claims = [payload.data, ...state.claims]
+            state.loadingCreateClaim = SUCCEEDED;
+        });
+        builder.addCase(claimCreateClaim.rejected, (state) => {
+            state.loadingCreateClaim = FAILED;
         });
     },
 });
@@ -54,4 +67,4 @@ export const getClaims = (state: IRootState) => state.claimsState.claims;
 export const getClaim = (state: IRootState, claimId: string) =>
   state.claimsState.claims.find(claim => claim.claimId == claimId);
 
-export const getPageStatus = (state: IRootState) => state.claimsState.status;
+export const getPageStatus = (state: IRootState) => state.claimsState.loadingClaims;
