@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { assignmentCreateAssignment } from "../../core/actions/assignments-actions";
+import { claimGetClaims } from "../../core/actions/claims-actions";
 
 function CreateAssignment() {
 
@@ -43,12 +44,15 @@ function CreateAssignment() {
 
   const onSubmit = async (assignment) => {
     try {
-      assignment.claimId = '3788b992-0627-4145-9dfb-913a8c60105b';
+      assignment.claimId = '3044db48-9c49-4138-a376-3eaab1a8e3e6';
       
       console.log('assignment to be created ', assignment);
       const response = await dispatch(assignmentCreateAssignment(assignment)).unwrap();
 
       console.log('response from create assignment...', response);
+
+      dispatch(claimGetClaims());
+      
       navigate('/assignments');
     } catch (e){
       console.log('error from catch exception ', e);
